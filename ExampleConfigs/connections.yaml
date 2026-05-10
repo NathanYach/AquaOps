@@ -1,0 +1,88 @@
+modules:
+  connections:
+
+    mqtt:
+      host: 192.168.1.100
+      port: 1883
+      keepalive_seconds: 60
+      client_id: aquaops-orchestrator
+      username: aquaops
+      password: changeme
+
+      topics:
+        telemetry_root: aquaops/telemetry
+        command_root:   aquaops/command
+        status_root:    aquaops/status
+
+    database:
+      host: 192.168.1.100
+      port: 5432
+      name: aquaops
+      username: aquaops
+      password: changeme
+
+      pool:
+        min_connections: 1
+        max_connections: 10
+        connection_timeout_seconds: 10
+        idle_timeout_seconds: 300
+
+    nodes:
+
+      irrigation_controller:
+        node_id: esp32-irrigation-01
+        description: "Primary irrigation ESP32 node"
+
+        devices:
+          valves:
+            - id: valve_1
+              gpio_pin: 26
+            - id: valve_2
+              gpio_pin: 27
+
+          moisture_sensors:
+            - id: soil_1
+              gpio_pin: 34
+            - id: soil_2
+              gpio_pin: 35
+
+          temperature_sensors:
+            - id: temp_1
+              gpio_pin: 32
+            - id: temp_2
+              gpio_pin: 33
+
+          grow_lights:
+            - id: light_1
+              gpio_pin: 18
+            - id: light_2
+              gpio_pin: 19
+
+      aquarium_controller:
+        node_id: esp32-aquarium-01
+        description: "Primary aquarium ESP32 node"
+
+        devices:
+          pumps:
+            - id: pump_1
+              gpio_pin: 26
+              description: "Main circulation pump"
+            - id: pump_2
+              gpio_pin: 27
+              description: "Water change pump"
+
+          water_sensors:
+            - id: water_temp_1
+              gpio_pin: 32
+              description: "Tank temperature sensor"
+            - id: water_level_1
+              gpio_pin: 34
+              description: "Tank water level sensor"
+
+          valves:
+            - id: valve_aq_1
+              gpio_pin: 18
+              description: "Drain valve"
+            - id: valve_aq_2
+              gpio_pin: 19
+              description: "Fill valve"

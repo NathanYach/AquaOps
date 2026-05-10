@@ -1,0 +1,108 @@
+modules:
+  irrigation-config:
+    system:
+      enabled: true
+      telemetry_interval_seconds: 30
+
+    global_safety:
+      enabled: true
+
+      leak_detection:
+        enabled: true
+        shutdown_all_zones_on_leak: true
+        alert_on_detection: true
+
+      emergency_shutdown:
+        enabled: true
+        disable_all_valves: true
+        disable_all_pumps: true
+
+      runtime_limits:
+        global_max_continuous_runtime_seconds: 300
+        global_max_daily_delivery_ml: 20000
+
+      sensor_validation:
+        shutdown_on_sensor_failure: true
+        ignore_invalid_readings: false
+        max_invalid_readings_before_shutdown: 5
+
+    zones:
+      herbs:
+        enabled: true
+        display_name: "Herb Garden"
+
+        environment:
+          target_air_temp_c: 22
+          target_humidity_percent: 55
+          light_duration_hours: 14
+
+        soil:
+          target_moisture_percent: 45
+          moisture_tolerance_percent: 5
+
+        watering:
+          preferred_water_source: aquarium
+          fallback_water_source: conditioned
+
+          trigger_below_moisture_percent: 40
+
+          target_delivery_ml: 500
+          max_delivery_ml: 1000
+
+          estimated_flow_rate_ml_per_second: 25
+
+          minimum_interval_minutes: 120
+
+          max_watering_duration_seconds: 90
+
+          safety:
+            leak_detection_enabled: true
+            auto_shutdown_on_sensor_failure: true
+            max_daily_delivery_ml: 3000
+            max_continuous_runtime_seconds: 120
+
+        hardware:
+          valve_id: valve_1
+          moisture_sensor_id: soil_1
+          temperature_sensor_id: temp_1
+          grow_light_id: light_1
+
+      tropicals:
+        enabled: true
+        display_name: "Tropical Plants"
+
+        environment:
+          target_air_temp_c: 26
+          target_humidity_percent: 75
+          light_duration_hours: 12
+
+        soil:
+          target_moisture_percent: 70
+          moisture_tolerance_percent: 4
+
+        watering:
+          preferred_water_source: aquarium
+          fallback_water_source: conditioned
+
+          trigger_below_moisture_percent: 65
+
+          target_delivery_ml: 1200
+          max_delivery_ml: 2000
+
+          estimated_flow_rate_ml_per_second: 40
+
+          minimum_interval_minutes: 90
+
+          max_watering_duration_seconds: 180
+
+          safety:
+            leak_detection_enabled: true
+            auto_shutdown_on_sensor_failure: true
+            max_daily_delivery_ml: 8000
+            max_continuous_runtime_seconds: 240
+
+        hardware:
+          valve_id: valve_2
+          moisture_sensor_id: soil_2
+          temperature_sensor_id: temp_2
+          grow_light_id: light_2
