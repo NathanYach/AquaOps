@@ -3,10 +3,10 @@ import argparse
 import sys
 from pathlib import Path
 
-# Ensure the project root (one level up from Tests/) is on sys.path
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from AquaOps.config_loader import load_configs
+from AquaOps.Services.config_loader import load_configs
 
 
 def parse_args():
@@ -26,18 +26,18 @@ def setUpModule():
     cfg = context.irrigation
 
 
-# ---------------------------------------------------------------------------
-# Top-level IrrigationConfig
-# ---------------------------------------------------------------------------
+
+
+
 
 class TestIrrigationConfigLoaded(unittest.TestCase):
     def test_irrigation_config_is_not_none(self):
         self.assertIsNotNone(cfg, "IrrigationConfig was not loaded (returned None)")
 
 
-# ---------------------------------------------------------------------------
-# SystemConfig
-# ---------------------------------------------------------------------------
+
+
+
 
 class TestSystemConfig(unittest.TestCase):
     def test_system_enabled(self):
@@ -47,15 +47,15 @@ class TestSystemConfig(unittest.TestCase):
         self.assertEqual(cfg.system.telemetry_interval_seconds, 30)
 
 
-# ---------------------------------------------------------------------------
-# GlobalSafetyConfig
-# ---------------------------------------------------------------------------
+
+
+
 
 class TestGlobalSafetyConfig(unittest.TestCase):
     def test_global_safety_enabled(self):
         self.assertTrue(cfg.global_safety.enabled)
 
-    # LeakDetection
+
     def test_leak_detection_enabled(self):
         self.assertTrue(cfg.global_safety.leak_detection.enabled)
 
@@ -65,7 +65,7 @@ class TestGlobalSafetyConfig(unittest.TestCase):
     def test_leak_detection_alert(self):
         self.assertTrue(cfg.global_safety.leak_detection.alert_on_detection)
 
-    # EmergencyShutdown
+
     def test_emergency_shutdown_enabled(self):
         self.assertTrue(cfg.global_safety.emergency_shutdown.enabled)
 
@@ -75,14 +75,14 @@ class TestGlobalSafetyConfig(unittest.TestCase):
     def test_emergency_shutdown_pumps(self):
         self.assertTrue(cfg.global_safety.emergency_shutdown.disable_all_pumps)
 
-    # RuntimeLimits
+
     def test_runtime_limits_max_continuous(self):
         self.assertEqual(cfg.global_safety.runtime_limits.global_max_continuous_runtime_seconds, 300)
 
     def test_runtime_limits_max_daily_delivery(self):
         self.assertEqual(cfg.global_safety.runtime_limits.global_max_daily_delivery_ml, 20000)
 
-    # SensorValidation
+
     def test_sensor_validation_shutdown_on_failure(self):
         self.assertTrue(cfg.global_safety.sensor_validation.shutdown_on_sensor_failure)
 
@@ -93,9 +93,9 @@ class TestGlobalSafetyConfig(unittest.TestCase):
         self.assertEqual(cfg.global_safety.sensor_validation.max_invalid_readings_before_shutdown, 5)
 
 
-# ---------------------------------------------------------------------------
-# Zones presence
-# ---------------------------------------------------------------------------
+
+
+
 
 class TestZonesLoaded(unittest.TestCase):
     def test_zones_not_empty(self):
@@ -108,9 +108,9 @@ class TestZonesLoaded(unittest.TestCase):
         self.assertIn("tropicals", cfg.zones)
 
 
-# ---------------------------------------------------------------------------
-# Herbs zone
-# ---------------------------------------------------------------------------
+
+
+
 
 class TestHerbsZone(unittest.TestCase):
     @classmethod
@@ -126,7 +126,7 @@ class TestHerbsZone(unittest.TestCase):
     def test_enabled(self):
         self.assertTrue(self.z.enabled)
 
-    # Environment
+
     def test_target_air_temp(self):
         self.assertEqual(self.z.environment.target_air_temp_c, 22)
 
@@ -136,14 +136,14 @@ class TestHerbsZone(unittest.TestCase):
     def test_light_duration(self):
         self.assertEqual(self.z.environment.light_duration_hours, 14)
 
-    # Soil
+
     def test_target_moisture(self):
         self.assertEqual(self.z.soil.target_moisture_percent, 45)
 
     def test_moisture_tolerance(self):
         self.assertEqual(self.z.soil.moisture_tolerance_percent, 5)
 
-    # Watering
+
     def test_preferred_water_source(self):
         self.assertEqual(self.z.watering.preferred_water_source, "aquarium")
 
@@ -168,7 +168,7 @@ class TestHerbsZone(unittest.TestCase):
     def test_max_watering_duration(self):
         self.assertEqual(self.z.watering.max_watering_duration_seconds, 90)
 
-    # Watering safety
+
     def test_safety_leak_detection(self):
         self.assertTrue(self.z.watering.safety.leak_detection_enabled)
 
@@ -181,7 +181,7 @@ class TestHerbsZone(unittest.TestCase):
     def test_safety_max_continuous_runtime(self):
         self.assertEqual(self.z.watering.safety.max_continuous_runtime_seconds, 120)
 
-    # Hardware
+
     def test_valve_id(self):
         self.assertEqual(self.z.hardware.valve_id, "valve_1")
 
@@ -195,9 +195,9 @@ class TestHerbsZone(unittest.TestCase):
         self.assertEqual(self.z.hardware.grow_light_id, "light_1")
 
 
-# ---------------------------------------------------------------------------
-# Tropicals zone
-# ---------------------------------------------------------------------------
+
+
+
 
 class TestTropicalsZone(unittest.TestCase):
     @classmethod
@@ -213,7 +213,7 @@ class TestTropicalsZone(unittest.TestCase):
     def test_enabled(self):
         self.assertTrue(self.z.enabled)
 
-    # Environment
+
     def test_target_air_temp(self):
         self.assertEqual(self.z.environment.target_air_temp_c, 26)
 
@@ -223,14 +223,14 @@ class TestTropicalsZone(unittest.TestCase):
     def test_light_duration(self):
         self.assertEqual(self.z.environment.light_duration_hours, 12)
 
-    # Soil
+
     def test_target_moisture(self):
         self.assertEqual(self.z.soil.target_moisture_percent, 70)
 
     def test_moisture_tolerance(self):
         self.assertEqual(self.z.soil.moisture_tolerance_percent, 4)
 
-    # Watering
+
     def test_preferred_water_source(self):
         self.assertEqual(self.z.watering.preferred_water_source, "aquarium")
 
@@ -255,7 +255,7 @@ class TestTropicalsZone(unittest.TestCase):
     def test_max_watering_duration(self):
         self.assertEqual(self.z.watering.max_watering_duration_seconds, 180)
 
-    # Watering safety
+
     def test_safety_leak_detection(self):
         self.assertTrue(self.z.watering.safety.leak_detection_enabled)
 
@@ -268,7 +268,7 @@ class TestTropicalsZone(unittest.TestCase):
     def test_safety_max_continuous_runtime(self):
         self.assertEqual(self.z.watering.safety.max_continuous_runtime_seconds, 240)
 
-    # Hardware
+
     def test_valve_id(self):
         self.assertEqual(self.z.hardware.valve_id, "valve_2")
 

@@ -1,12 +1,11 @@
-
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from AquaOps.Database.Config.database_config import DatabaseConfig
-from AquaOps.Database.Config.database_pool_config import DatabasePoolConfig
+from AquaOps.Models.Database.Config.database_config import DatabaseConfig
+from AquaOps.Models.Database.Config.database_pool_config import DatabasePoolConfig
 
 @dataclass(frozen=True)
 class ConnectionsConfig:

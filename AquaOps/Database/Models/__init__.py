@@ -1,6 +1,0 @@
-from AquaOps.Database.Models.zone_settings import ZoneSettings
-from AquaOps.Database.Models.zone_environment_settings import ZoneEnvironmentSettings
-from AquaOps.Database.Models.zone_soil_settings import ZoneSoilSettings
-from AquaOps.Database.Models.zone_hardware_settings import ZoneHardwareSettings
-from AquaOps.Database.Models.zone_watering_settings import ZoneWateringSettings
-from AquaOps.Database.Models.irrigation_safety_settings import IrrigationSafetySettings

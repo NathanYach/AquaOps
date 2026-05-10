@@ -3,7 +3,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from AquaOps.config_loader import load_configs
+from AquaOps.Models_loader import load_configs
 
 
 def indent(level: int) -> str:
@@ -30,16 +30,16 @@ def print_config(config_dir: Path):
     print(f"  Irrigation Config: {config_dir}")
     print(f"{'='*60}\n")
 
-    # ------------------------------------------------------------------
-    # System
-    # ------------------------------------------------------------------
+
+
+
     print_section("System")
     print_field("enabled",                    cfg.system.enabled)
     print_field("telemetry_interval_seconds", cfg.system.telemetry_interval_seconds)
 
-    # ------------------------------------------------------------------
-    # Global Safety
-    # ------------------------------------------------------------------
+
+
+
     print()
     print_section("Global Safety")
     print_field("enabled", cfg.global_safety.enabled)
@@ -63,9 +63,9 @@ def print_config(config_dir: Path):
     print_field("ignore_invalid_readings",            cfg.global_safety.sensor_validation.ignore_invalid_readings,             level=2)
     print_field("max_invalid_readings_before_shutdown", cfg.global_safety.sensor_validation.max_invalid_readings_before_shutdown, level=2)
 
-    # ------------------------------------------------------------------
-    # Zones
-    # ------------------------------------------------------------------
+
+
+
     print()
     print_section(f"Zones ({len(cfg.zones)} loaded)")
 
